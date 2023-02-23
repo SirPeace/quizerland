@@ -7,7 +7,7 @@
 - _React_
 - _Redux_
 - _TypeScript_
-- _Apollo (GraphQL)_
+- _REST API_
 - _MaterialUI_
 
 ## Running locally
