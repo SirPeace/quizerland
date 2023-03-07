@@ -1,7 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 
+import quizReducer from "./quiz/quizReducer"
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    quiz: quizReducer,
+  },
 })
 
 export type AppDispatch = typeof store.dispatch
