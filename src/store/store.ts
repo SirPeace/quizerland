@@ -1,8 +1,15 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
+import { QuizAction } from "./quiz/actions"
 
-import quizReducer from "./quiz/quizReducer"
+import quizReducer, { QuizState } from "./quiz/reducer"
 
-export const store = configureStore({
+type RootReducer = {
+  quiz: QuizState
+}
+
+type RootAction = QuizAction
+
+export const store = configureStore<RootReducer, RootAction>({
   reducer: {
     quiz: quizReducer,
   },

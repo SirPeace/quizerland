@@ -1,17 +1,21 @@
 import { Box, Button, Card, CardContent, CardHeader, css } from "@mui/material"
 import { SerializedStyles } from "@mui/styled-engine"
 import { FC, useState } from "react"
+import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
+import { selectQuiz } from "../store/quiz/actions"
+import { Quiz } from "../store/quiz/reducer"
 
 type QuizCardProps = {
-  quiz: {
-    id: number
-  }
+  quiz: Quiz
   cardCss?: SerializedStyles
 }
 
 const QuizCard: FC<QuizCardProps> = ({ quiz, cardCss }) => {
   const [isHovered, setIsHovered] = useState(false)
+
+  const dispatch = useDispatch()
+  const setCurrentQuiz = () => dispatch(selectQuiz(quiz.id))
 
   return (
     <Card
@@ -25,12 +29,9 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, cardCss }) => {
     >
       <CardHeader
         css={css({ color: "#000" })}
-        title="Название теста"
+        title={quiz.title}
       />
-      <CardContent>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. A ab eum unde
-        necessitatibus nostrum provident et at debitis libero est.
-      </CardContent>
+      <CardContent>{quiz.description}</CardContent>
       <Box css={css({ display: "flex", padding: 10 })}>
         <Box css={css({ flexGrow: 1 })} />
         <Box>
@@ -38,6 +39,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, cardCss }) => {
             <Button
               css={css({ marginRight: 10 })}
               color="primary"
+              onClick={setCurrentQuiz}
             >
               To the quiz
             </Button>

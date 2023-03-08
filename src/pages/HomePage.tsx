@@ -1,28 +1,42 @@
-import React, { useRef } from "react"
 import { Box, Container, css } from "@mui/material"
 
 import DefaultLayout from "../layouts/Default"
 import theme from "../theme/themeConfig"
 import QuizCard from "../components/QuizCard"
+import { getSampleQuiz } from "../store/quiz/reducer"
 
 const HomePage: React.FC = () => {
-  const titleCss = useRef({ marginTop: 80, marginBottom: 30, height: 50 })
-  const {
-    marginTop: titleMarginTop,
-    marginBottom: titleMarginBottom,
-    height: titleHeight,
-  } = titleCss.current
+  const cardsListCss = {
+    padding: 10,
+    paddingRight: 15,
+  }
+  const titleCss = {
+    marginBottom: 30,
+    marginTop: 30,
+    height: 75,
+  }
+
+  const cardsListMaxHeight =
+    document.body.clientHeight -
+    [
+      80, // layout padding top
+      titleCss.marginTop,
+      titleCss.marginBottom,
+      titleCss.height,
+      cardsListCss.padding * 2,
+    ].reduce((sum, v) => sum + v)
 
   return (
     <DefaultLayout>
-      <Container maxWidth="md">
+      <Container
+        maxWidth="md"
+        css={css({ flexGrow: 1 })}
+      >
         <h1
           css={css({
             fontSize: 40,
             textAlign: "center",
-            marginTop: titleMarginTop,
-            marginBottom: titleMarginBottom,
-            maxHeight: titleHeight,
+            ...titleCss,
           })}
         >
           Добро пожаловать в{" "}
@@ -40,19 +54,16 @@ const HomePage: React.FC = () => {
 
         <Box
           css={css({
-            maxHeight:
-              window.screen.availHeight -
-              (titleHeight + titleMarginBottom + titleMarginTop + 20),
+            maxHeight: cardsListMaxHeight,
             overflowY: "scroll",
-            padding: 10,
-            paddingRight: 15,
             scrollbarColor: `#fff ${theme.palette.info.main}`,
+            ...cardsListCss,
           })}
         >
-          {[0, 0, 0].map((_, i) => (
+          {new Array(10).fill(getSampleQuiz()).map((quiz, i) => (
             <QuizCard
               key={i}
-              quiz={{ id: i }}
+              quiz={quiz}
               cardCss={css({
                 "&:not(&:last-child)": {
                   marginBottom: 20,

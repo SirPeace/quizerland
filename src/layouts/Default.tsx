@@ -17,6 +17,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
         display: "flex",
         flexDirection: "column",
         color: "#fff",
+        paddingTop: 80,
       })}
     >
       <IconButton css={css({ position: "fixed", top: 20, left: 20 })}>
